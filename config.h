@@ -1,6 +1,5 @@
 //connection configs 
-bool objectsAvailible
-
+bool objectsAvailible;
 
 
 //output congfigs
@@ -16,5 +15,9 @@ typedef struct
 }color;
 
 //line control config
+
+bool emergencyStop;
+bool wrongObject; 
+bool slower;
 
 //feedMech config
