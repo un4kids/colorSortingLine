@@ -1,4 +1,6 @@
 //connection configs 
+bool objectsAvailible
+
 
 
 //output congfigs
