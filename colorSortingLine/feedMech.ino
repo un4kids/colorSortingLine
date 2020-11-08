@@ -1,7 +1,7 @@
 
 void feedMechBegin()
 {
-  
+  Serial,printlkn(Ttesirinf);
 }
 
 
