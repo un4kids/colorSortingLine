@@ -2,7 +2,7 @@
 
 #include "config.h"
 
-#define sensPin 12 //sens for the arm
+#define sensPin 12 
 int ObjectColor;
 
 
