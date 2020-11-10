@@ -15,8 +15,8 @@ typedef struct
 }color;
 
 //line control config
-
-bool emergencyStop;
+bool objectIsUnrecognized = false;
+bool emergencyStop = false;
 bool wrongObject; 
 bool slower;
 
