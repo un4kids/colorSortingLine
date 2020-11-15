@@ -5,11 +5,11 @@ void lineControlLoop()
   throwUnrecognizedObj()
 }
 
-void emergencyStop()
+void emergency_Stop()
 {
-  while (emergencyStop)
+  while (emergency_Stop())
   {
-    Servo1.write(0);
+    feedMechServo.write(0);
   }
 }
 void throwUnrecognizedObj()
@@ -36,4 +36,12 @@ bool isObjectToThrowIsPresent()
   return true;
  }
   return false;
+}
+void moveline()
+{
+ for(int DCmotorSpeed = 0 ;  DCmotorSpeed <= 255;)
+ {
+ analogWrite(DSmPin, DCmotorSpeed); 
+ delay(30);
+ }      
 }
