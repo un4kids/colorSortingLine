@@ -1,4 +1,4 @@
-//connection configs 
+//connection configs
 bool objectsAvailible;
 
 
@@ -7,23 +7,32 @@ bool objectsAvailible;
 //robot arm control config
 
 //color recognition config
-typedef struct 
+typedef struct
 {
   uint8_t R;
   uint8_t G;
   uint8_t B;
-}color;
+} color;
 
 //line control config
 
 bool emergencyStop;
-bool wrongObject; 
+bool wrongObject;
 bool slower;
 
 //feedMech config
 
-typedef struct 
+#define feedMechServoPin A0
+#define feedMechPhoPin 8
+typedef struct
 {
-  unsigned long timer;
-  
-}feed_mech_params;
+  int countOfFeededObjects;
+  unsigned long mainMaxTimer;
+  unsigned long mainMinTimer;
+  unsigned long mainTimer;
+
+} feed_mech_params_t;
+
+feed_mech_params_t servo_modes = {0, 256, 50, 150};
+unsigned long feedMechTimer_container = 0;
+unsigned long* feedMechTimer_ptr;

@@ -1,6 +1,7 @@
 #include <Arduino.h>
-#include "Servo.h"
+#include "VarSpeedServo.h"
 #include "config.h"
+
 
 void setup()
 {
