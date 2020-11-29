@@ -16,8 +16,9 @@ typedef struct
 
 //line control config
 bool objectIsUnrecognized = false;
-bool emergencyStop = false;
+bool stopTheLine = false;
 bool wrongObject; 
 bool slower;
+int lineSpeed = 10;
 
 //feedMech config

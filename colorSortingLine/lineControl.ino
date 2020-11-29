@@ -2,46 +2,49 @@
 
 void lineControlLoop()
 {
+  if (!stopTheLine)
+  {
+    moveLine(lineSpeed);
+  }
+
   throwUnrecognizedObj()
 }
 
-void emergency_Stop()
-{
-  while (emergency_Stop())
-  {
-    feedMechServo.write(0);
-  }
-}
+//void emergencyStop() //TODO
+//{
+//  if (stopTheLine)
+//  {
+//    feedMechServo.write(0);
+//  }
+//}
 void throwUnrecognizedObj()
 {
   if (objectIsUnrecognized)
   {
     if (isObjectToThrowIsPresent())
     {
-     //digitalWrite(eleMag, HIGH); 
-     //digitalWrite(eleMa_2, LOW);
+      //digitalWrite(eleMag, HIGH);
+      //digitalWrite(eleMa_2, LOW);
       if (isObjectToThrowIsPresent())
       {
-       //digitalWrite(eleMag, LOW);
+        //digitalWrite(eleMag, LOW);
       }
-    objectIsUnrecognized = false; 
+      objectIsUnrecognized = false;
     }
   }
-  
+
 }
 bool isObjectToThrowIsPresent()
 {
- if(digitalRead(phoRes)== LOW)
- {
-  return true;
- }
+  if (digitalRead(phoRes) == LOW)
+  {
+    return true;
+  }
   return false;
 }
-void moveline()
+void moveLine(int speedPercents)
 {
- for(int DCmotorSpeed = 0 ;  DCmotorSpeed <= 255;)
- {
- analogWrite(DSmPin, DCmotorSpeed); 
- delay(30);
- }      
+  int dc = map(speedPercents, 0, 100, 0, 255);
+  analogWrite(DSmPin, dc);
+
 }
