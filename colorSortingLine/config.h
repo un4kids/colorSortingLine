@@ -33,6 +33,6 @@ typedef struct
 
 } feed_mech_params_t;
 
-feed_mech_params_t servo_modes = {0, 256, 50, 150};
+feed_mech_params_t servo_modes = {0, 0, 0, 0};
 unsigned long feedMechTimer_container = 0;
 unsigned long* feedMechTimer_ptr;
