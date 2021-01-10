@@ -1,13 +1,26 @@
 
+#include<EEPROM.h>
 
+void setupLinecontrol()
+{ //  feedMechServo.attach(4);
+  //pinMode(solPin,OUTPUT);
+  pinMode(eleMag, OUTPUT);
+  pinMode(eleMag_2, OUTPUT);
+  pinMode(DSmPin, OUTPUT);
+
+  lineControlparams.countOfThrowedObjects = 0;
+  lineControlparams.defaultDutyCycle = 10;
+  lineControlparams.maxDutyCycle = 255;
+  lineControlparams.minDutyCycle = 0;
+};
 void lineControlLoop()
 {
   if (!stopTheLine)
   {
-    moveLine(lineSpeed);
+    moveLine(lineControlparams.defaultDutyCycle);
   }
 
-  throwUnrecognizedObj()
+  throwUnrecognizedObj();
 }
 
 //void emergencyStop() //TODO
@@ -25,10 +38,8 @@ void throwUnrecognizedObj()
     {
       //digitalWrite(eleMag, HIGH);
       //digitalWrite(eleMa_2, LOW);
-      if (isObjectToThrowIsPresent())
-      {
-        //digitalWrite(eleMag, LOW);
-      }
+
+      lineControlparams.countOfThrowedObjects++;
       objectIsUnrecognized = false;
     }
   }

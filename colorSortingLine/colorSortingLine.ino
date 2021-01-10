@@ -13,11 +13,7 @@ int eleMag_2 = 2;//pin for the electromagnet
 
 void setup()
 {
-  feedMechServo.attach(4);
-  pinMode(solPin,OUTPUT);
-  pinMode(eleMag,OUTPUT);
-  pinMode(eleMag_2,OUTPUT);  
-  pinMode(DSmPin,OUTPUT);
+
 }
 
 
