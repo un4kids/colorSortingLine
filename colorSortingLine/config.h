@@ -19,7 +19,9 @@ bool objectIsUnrecognized = false;
 bool stopTheLine = false;
 bool wrongObject;
 bool slower;
-//int lineSpeed = 10;
+unsigned int addr;
+int DisCurentPos = 0; //for the display funcrion
+
 
 struct line_control_params_t
 { unsigned int countOfThrowedObjects;
@@ -27,6 +29,20 @@ struct line_control_params_t
   unsigned int maxDutyCycle;
   unsigned int minDutyCycle;
 };
- line_control_params_t lineControlparams;
+ struct line_control_params_t  lineControlparams = {0, 200, 255, 10};
+// lineControlparams.countOfThrowedObjects = 0;
+// lineControlparams.defaultDutyCycle = 200;
+// lineControlparams.maxDutyCycle = 255;
+// lineControlparams.minDutyCycle = 10;
+
+ String line_control_menu [4] =
+ {
+   "Count of throwed objects",
+   "Default DutyCycle",
+   "maxDutyCycle",
+   "minDutyCycle",
+ };
+ 
+ 
 
 //feedMech config

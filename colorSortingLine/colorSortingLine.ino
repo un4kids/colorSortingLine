@@ -1,7 +1,11 @@
+#include <EEPROMex.h>
+#include <EEPROMVar.h>
 #include <Arduino.h>
-
 #include "config.h"
+#include <Wire.h>
+#include "rgb_lcd.h"
 
+//rgb_lcd lcd;
 
 #include <Servo.h>
 
@@ -23,6 +27,6 @@ void loop()
   feedMechLoop();
   lineControlLoop();
   colorRecognitionLoop();
-  armControlLoop();
+//  armControlLoop();
   
 }
