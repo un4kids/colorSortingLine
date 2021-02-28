@@ -1,10 +1,11 @@
 #include <Arduino.h>
 
 #include "config.h"
+#include <EEPROMex.h>
 
 void setup()
 {
-  colorRecognitionbegin();
+  colorRecognitionSetup();
 }
 
 
@@ -14,5 +15,6 @@ void loop()
   lineControlLoop();
   colorRecognitionLoop();
   armControlLoop();
+  mesureColor();
   
 }
