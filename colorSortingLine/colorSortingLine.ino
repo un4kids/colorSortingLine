@@ -4,7 +4,9 @@
 #include "MultiDriver.h"
 #include "SyncDriver.h"
 #include "config.h"
+#include "Robot_Arm_pinout.h"
 //ArmControl
+int sensPin = HIGH;
 int ObjectColor1;
 int ObjectColor2;
 int ObjectColor3;
@@ -40,9 +42,12 @@ void setup()
 
 void loop()
 {
+  ObjectColor = MOVE_2;
   feedMechLoop();
   lineControlLoop();
   colorRecognitionLoop();
+  //arm control
+  isObjectToSortIsPresent();
   armControlLoop();
   
 }

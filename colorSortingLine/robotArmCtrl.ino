@@ -1,30 +1,76 @@
 void isObjectToSortIsPresent() {
   if (digitalRead(sensPin) == HIGH) {
+    //Serial.println("Sens pin = HIGH");
     availableObject = true;
   }
 }
 
 void sortCurrentObject() {
-  Serial.print(ObjectColor);
+  xMotor.enable();
+  //Serial.println(ObjectColor);
   switch (ObjectColor) {
     case MOVE_1:
-      xMotor.enable();
-      ctl.rotate(0, 18, 12);
+    Serial.println("MOVE_1");
+      ctl.rotate(0, 10, -15);
+      //Serial.println("Movement right forward");
+      //delay(400);
+      //ctl.rotate(0, 10, 0);
+      //Serial.println("Movement left forward");
+      //delay(400);
+      ctl.rotate(0, -10, 15);
+      //Serial.println("Movement left backwards");
+      //delay(400);
+      //ctl.rotate(0, 0, 15);
+      //Serial.println("Movement right backwards");
+      delay(400);
+      ctl.rotate(15, 0, 0);
       delay(200);
+      //drop
+      delay(200);
+      ctl.rotate(-15, 0, 0);
       break;
     case MOVE_2:
-      ctl.rotate(0, -4, -8);
-      ctl.rotate(2, 4, 8);
+      Serial.println("MOVE_2");
+      ctl.rotate(0, 10, -15);
+      //Serial.println("Movement right forward");
+      //delay(400);
+      //ctl.rotate(0, 10, 0);
+      //Serial.println("Movement left forward");
+      //delay(400);
+      ctl.rotate(0, -10, 15);
+      //Serial.println("Movement left backwards");
+      //delay(400);
+      //ctl.rotate(0, 0, 15);
+      //Serial.println("Movement right backwards");
+      delay(400);
+      ctl.rotate(-15, 0, 0);
       delay(200);
+      //drop
+      delay(200);
+      ctl.rotate(15, 0, 0);
       break;
     case MOVE_3:
-      // ctl.rotate(2, 4, 8);
-      ctl.rotate(0, -4, -8);
-      ctl.rotate(2, 4, 8);
+    Serial.println("MOVE_3");
+      ctl.rotate(0, 10, -15);
+      //Serial.println("Movement right forward");
+      //delay(400);
+      //ctl.rotate(0, 10, 0);
+      //Serial.println("Movement left forward");
+      //delay(400);
+      ctl.rotate(0, -10, 15);
+      //Serial.println("Movement left backwards");
+      //delay(400);
+      //ctl.rotate(0, 0, 15);
+      //Serial.println("Movement right backwards");
+      delay(400);
+      ctl.rotate(24, 0, 0);
       delay(200);
+      //drop
+      delay(200);
+      ctl.rotate(-24, 0, 0);
       break;
     case HOME:
-      ctl.rotate(-6.0, -14.5, -4.5);
+    Serial.println("HOME");
       delay(200);
       xMotor.disable();
   }
@@ -54,8 +100,8 @@ void setupArm() {
   zMotor.setSpeedProfile(zMotor.LINEAR_SPEED, 600, 600);
 
   pinMode(EN, OUTPUT);
-  movementMode = 1;
-  Serial.begin(115200);
+  //movementMode = 1;
+  Serial.begin(9600);
 }
 void saveArmSettings(ArmSettings* as, int address)
 {
