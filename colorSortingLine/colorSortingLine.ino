@@ -5,7 +5,7 @@
 #include <Wire.h>
 #include "rgb_lcd.h"
 
-//rgb_lcd lcd;
+rgb_lcd lcd;
 
 #include <Servo.h>
 
@@ -17,7 +17,7 @@ int eleMag_2 = 2;//pin for the electromagnet
 
 void setup()
 {
-
+  lcd.begin(16,2);
 }
 
 

@@ -1,7 +1,7 @@
 #include <Wire.h>
 #include "rgb_lcd.h"
 
-rgb_lcd lcd;
+//rgb_lcd lcd;
 
 
 
@@ -11,7 +11,7 @@ void setupLinecontrol()
   pinMode(eleMag, OUTPUT);
   pinMode(eleMag_2, OUTPUT);
   pinMode(DSmPin, OUTPUT);
-  lcd.begin(16,2);
+  lcd.begin(16, 2);
 
   lineControlparams.countOfThrowedObjects = 0;
   lineControlparams.defaultDutyCycle = 10;
@@ -20,12 +20,14 @@ void setupLinecontrol()
 };
 void lineControlLoop()
 {
-  if (!stopTheLine)
-  {
-    moveLine(lineControlparams.defaultDutyCycle);
-  }
-
-  throwUnrecognizedObj();
+//  if (!stopTheLine)
+//  {
+//    moveLine(lineControlparams.defaultDutyCycle);
+//  };
+//
+//  throwUnrecognizedObj();
+  displayLineControlParamsDown();//function for moving the menu down
+  displayLineControlParamsUp();//function for moving the menu up
 }
 
 //void emergencyStop() //TODO
@@ -78,39 +80,62 @@ void saveLineControlparams(line_control_params_t* lcp)
 };
 void readLineControlparams(line_control_params_t* lcp)
 {
- lcp->countOfThrowedObjects = EEPROM.readInt(addr);
- addr += sizeof(int);
- lcp->defaultDutyCycle = EEPROM.readInt(addr);
- addr += sizeof(int);
- lcp->maxDutyCycle = EEPROM.readInt(addr);
- addr += sizeof(int);
- lcp->minDutyCycle = EEPROM.readInt(addr);
- addr += sizeof(int);
- addr = 0;
+  lcp->countOfThrowedObjects = EEPROM.readInt(addr);
+  addr += sizeof(int);
+  lcp->defaultDutyCycle = EEPROM.readInt(addr);
+  addr += sizeof(int);
+  lcp->maxDutyCycle = EEPROM.readInt(addr);
+  addr += sizeof(int);
+  lcp->minDutyCycle = EEPROM.readInt(addr);
+  addr += sizeof(int);
+  addr = 0;
 };
 
-void display_line_control_params()
+void displayLineControlParamsDown()
 {
- if(DisCurentPos == 0)
-  DisCurentPos = 3;
- else
- {
-  DisCurentPos --;
- }
- 
- if(DisCurentPos==3)
-  DisCurentPos = 0;
- else
- {
-   DisCurentPos ++;
- }
 
- if(DisCurentPos <= 3 )
-  DisCurentPos++;
- 
- lcd.setCursor(0,0);
- lcd.print(line_control_menu [DisCurentPos]);
- lcd.setCursor(0,1);
- lcd.print(line_control_menu [DisCurentPos+1]); 
- 
+  //for ( DisGlobalPos <3; DisGlobalPos++;)
+  while(DisGlobalPos <3)
+  {
+    
+    lcd.clear();
+    lcd.setCursor(0,1);
+    lcd.print(">");
+    lcd.setCursor(0, 0);
+    lcd.print(line_control_menu [DisGlobalPos]);
+    lcd.setCursor(1, 1);
+    lcd.print(line_control_menu [DisGlobalPos + 1]);
+    DisGlobalPos++;
+    delay(5000);
+    
+  }
+  if(DisGlobalPos=3)
+  {
+    lcd.setCursor(1, 1);
+    lcd.print(line_control_menu [0]);
+  }
+}  
+void displayLineControlParamsUp()
+{
+
+  //for ( DisGlobalPos>0; DisGlobalPos--;)
+  while(DisGlobalPos>0)
+  {
+    
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print(">");
+    lcd.setCursor(0, 1);
+    lcd.print(line_control_menu [DisGlobalPos]);
+    lcd.setCursor(1, 0);
+    lcd.print(line_control_menu [DisGlobalPos - 1]);
+    DisGlobalPos--;
+    delay(5000);
+    
+  }
+  if(DisGlobalPos=0)
+  {
+    lcd.setCursor(1, 0);
+    lcd.print(line_control_menu [3]);
+  }  
 }

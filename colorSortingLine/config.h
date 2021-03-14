@@ -20,7 +20,7 @@ bool stopTheLine = false;
 bool wrongObject;
 bool slower;
 unsigned int addr;
-int DisCurentPos = 0; //for the display funcrion
+int DisGlobalPos=0;  //for the display funcrions
 
 
 struct line_control_params_t
