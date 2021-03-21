@@ -3,7 +3,7 @@
 #include <EEPROMex.h>
 #define sensPin 12 
 int ObjectColor;
-int addr = 0;
+int EEPROMaddr = 0;
 
 
 //feedMechParams
@@ -13,19 +13,22 @@ void setup()
 {
   
 }
+//feedMechParams
+//Object_color
+//lineControlparams
 void ReadAllEEPROM(){
+  EEPROMaddr = 0;
   readFeedMechParams();
   readObject_Color();
   readLineControlParams();
-  addr = 0;
+  
 }
 void WriteAllEEPROM(){
+  EEPROMaddr = 0;
   updateFeedMechParams();
   readObject_Color();
   readLineControlParams();
-  addr = 0;
 }
-
 void loop()
 {
   feedMechLoop();
