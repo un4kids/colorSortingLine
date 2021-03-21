@@ -97,22 +97,59 @@ void displayLineControlParamsDown()
   //for ( DisGlobalPos <3; DisGlobalPos++;)
   while(DisGlobalPos <3)
   {
-    
+   int nextStrid =0; 
     lcd.clear();
     lcd.setCursor(0,1);
     lcd.print(">");
     lcd.setCursor(0, 0);
-    lcd.print(line_control_menu [DisGlobalPos]);
+    //lcd.print(line_control_menu [DisGlobalPos]);
+    lcd.print(sample [DisGlobalPos]);
     lcd.setCursor(1, 1);
-    lcd.print(line_control_menu [DisGlobalPos + 1]);
+    //lcd.print(line_control_menu [DisGlobalPos + 1]);
+    if(DisGlobalPos == 2)
+    {
+      nextStrid = 0;
+      
+    }
+    else
+    {
+      nextStrid = DisGlobalPos + 1;
+    }
+    lcd.print(sample [nextStrid]);
     DisGlobalPos++;
     delay(5000);
     
   }
-  if(DisGlobalPos=3)
+  if(DisGlobalPos=2)
   {
     lcd.setCursor(1, 1);
-    lcd.print(line_control_menu [0]);
+    //lcd.print(line_control_menu [0]);
+     lcd.print(sample [0]);
+  }
+  while(button_pressed==true)//for calling sub-arrays
+  {
+   if(DisGlobalPos= 1)
+   {
+    DisGlobalPos=0;
+    lcd.clear();
+    lcd.setCursor(0,1);
+    lcd.print(">");
+    lcd.setCursor(0, 0);
+    lcd.print(opt_2 [DisGlobalPos]);
+    lcd.setCursor(1, 1);
+    lcd.print(opt_2 [DisGlobalPos++]);
+   }
+   else
+   {
+    DisGlobalPos=0;
+    lcd.clear();
+    lcd.setCursor(0,1);
+    lcd.print(">");
+    lcd.setCursor(0, 0);
+    lcd.print(opt_3 [DisGlobalPos]);
+    lcd.setCursor(1, 1);
+    lcd.print(opt_3 [DisGlobalPos++]);
+   }
   }
 }  
 void displayLineControlParamsUp()
@@ -121,14 +158,25 @@ void displayLineControlParamsUp()
   //for ( DisGlobalPos>0; DisGlobalPos--;)
   while(DisGlobalPos>0)
   {
-    
+   int nextStr = 0; 
     lcd.clear();
     lcd.setCursor(0,0);
     lcd.print(">");
     lcd.setCursor(0, 1);
-    lcd.print(line_control_menu [DisGlobalPos]);
+    //lcd.print(line_control_menu [DisGlobalPos]);
+    lcd.print(sample [DisGlobalPos]);
     lcd.setCursor(1, 0);
-    lcd.print(line_control_menu [DisGlobalPos - 1]);
+    //lcd.print(line_control_menu [DisGlobalPos - 1]);
+    if(DisGlobalPos == 0)
+    {
+      nextStr = 2;
+      
+    }
+    else
+    {
+      nextStr = DisGlobalPos - 1;
+    }
+     lcd.print(sample [nextStr]);
     DisGlobalPos--;
     delay(5000);
     
@@ -136,6 +184,32 @@ void displayLineControlParamsUp()
   if(DisGlobalPos=0)
   {
     lcd.setCursor(1, 0);
-    lcd.print(line_control_menu [3]);
+    //lcd.print(line_control_menu [3]);
+    lcd.print(sample [2]);
+  }
+   while(button_pressed==true)//for calling sub-arrays
+  {
+   if(DisGlobalPos= 0)
+   {
+    DisGlobalPos=0;
+    lcd.clear();
+    lcd.setCursor(0,1);
+    lcd.print(">");
+    lcd.setCursor(0, 0);
+    lcd.print(opt_1 [DisGlobalPos]);
+    lcd.setCursor(1, 1);
+    lcd.print(opt_1 [DisGlobalPos++]);
+   }
+   else
+   {
+    DisGlobalPos=0;
+    lcd.clear();
+    lcd.setCursor(0,1);
+    lcd.print(">");
+    lcd.setCursor(0, 0);
+    lcd.print(opt_2 [DisGlobalPos]);
+    lcd.setCursor(1, 1);
+    lcd.print(opt_2 [DisGlobalPos++]);
+   }
   }  
 }

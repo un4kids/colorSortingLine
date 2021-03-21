@@ -19,6 +19,7 @@ bool objectIsUnrecognized = false;
 bool stopTheLine = false;
 bool wrongObject;
 bool slower;
+bool button_pressed = true;
 unsigned int addr;
 int DisGlobalPos=0;  //for the display funcrions
 
@@ -35,14 +36,41 @@ struct line_control_params_t
 // lineControlparams.maxDutyCycle = 255;
 // lineControlparams.minDutyCycle = 10;
 
- String line_control_menu [4] =
- {
-   "Count of throwed objects",
-   "Default DutyCycle",
-   "maxDutyCycle",
-   "minDutyCycle",
- };
+String line_control_menu [4] =
+{
+  "Count of throwed objects",
+  "Default DutyCycle",
+  "maxDutyCycle",
+  "minDutyCycle",
+};
+
+String sample [3] =
+{
+  "opt 1",
+  "opt 2",
+  "opt 3",
+};
  
+String opt_1 [3] =
+{
+  "nice",
+  "option",
+  "one",
+};
+  
+String opt_2 [3] =
+{
+  "well",
+  "done",
+  "option 2",
+};
+
+String opt_3 [3] =
+{
+  "good",
+  "job",
+  "option 3",
+};     
  
 
 //feedMech config
