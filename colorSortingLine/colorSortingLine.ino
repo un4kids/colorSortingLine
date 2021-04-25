@@ -1,3 +1,5 @@
+#include <SoftwareSerial.h>
+#include <VarSpeedServo.h> 
 #include <EEPROMex.h>
 #include <Arduino.h>                                                                                            
 #include "A4988.h"
@@ -7,22 +9,22 @@
 #include "Robot_Arm_pinout.h"
 //ArmControl
 int sensPin = HIGH;
-int ObjectColor1;
-int ObjectColor2;
-int ObjectColor3;
 bool needToSafe = true;
 
-struct ArmSettings
- { 
-  int Movement1;
-  int Movement2;
-  int Movement3;
- };
+SoftwareSerial mySerial(12, 13); // RX, TX
+VarSpeedServo myservo; 
 
-ArmSettings settings = {22, 6, 576};
-
-char ObjectColor;
+int currentColor = 0;
 bool availableObject = false;
+//robot arm control config
+//typedef struct 
+//{
+//  int objectColor1;
+//  int objectColor2;
+//  int objectColor3;
+//  int Home;
+//}ArmSettings;
+//ArmSettings settingsForColor = {1, 2, 3, 4};
 
 A4988 xMotor(STEPS_PER_REVOLUTION, X_DIR, X_STP, EN);
 A4988 yMotor(STEPS_PER_REVOLUTION, Y_DIR, Y_STP, EN);
@@ -42,12 +44,11 @@ void setup()
 
 void loop()
 {
-  ObjectColor = MOVE_2;
   feedMechLoop();
   lineControlLoop();
   colorRecognitionLoop();
   //arm control
+  currentColor = 51;
+  readCmd();
   isObjectToSortIsPresent();
-  armControlLoop();
-  
 }
