@@ -8,6 +8,7 @@
 //#define sensPin 12 
 int ObjectColor;
 RF24 radio(9, 10);
+//RF24 radio(9, 10); // CE, CSN
 const byte address[6] = "00001";
 
 bool Emergencystop = 1;

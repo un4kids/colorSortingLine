@@ -21,3 +21,7 @@ bool wrongObject;
 bool slower;
 
 //feedMech config
+//remoteCtl
+ 
+  //const byte address[6] = "00001";
+  int a = 0;
