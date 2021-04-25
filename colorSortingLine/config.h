@@ -22,6 +22,8 @@ bool slower;
 bool button_pressed = true;
 unsigned int addr;
 int DisGlobalPos=0;  //for the display funcrions
+unsigned long startMillis;
+unsigned long currMillis;
 
 
 struct line_control_params_t

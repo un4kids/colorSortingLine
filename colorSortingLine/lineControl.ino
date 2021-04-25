@@ -9,9 +9,10 @@ void setupLinecontrol()
 { //  feedMechServo.attach(4);
   //pinMode(solPin,OUTPUT);
   pinMode(eleMag, OUTPUT);
-  pinMode(eleMag_2, OUTPUT);
+ // pinMode(eleMag_2, OUTPUT);
   pinMode(DSmPin, OUTPUT);
   lcd.begin(16, 2);
+  //startMillis=millis();
 
   lineControlparams.countOfThrowedObjects = 0;
   lineControlparams.defaultDutyCycle = 10;
@@ -43,8 +44,14 @@ void throwUnrecognizedObj()
   {
     if (isObjectToThrowIsPresent())
     {
-      //digitalWrite(eleMag, HIGH);
-      //digitalWrite(eleMa_2, LOW);
+      startMillis=millis();
+      ActivateSol();
+      
+      
+     
+      
+      
+      
 
       lineControlparams.countOfThrowedObjects++;
       objectIsUnrecognized = false;
@@ -97,7 +104,7 @@ void displayLineControlParamsDown()
   //for ( DisGlobalPos <3; DisGlobalPos++;)
   while(DisGlobalPos <3)
   {
-   int nextStrid =0; 
+   int nextStrid =0;//за да не превърта менюто 
     lcd.clear();
     lcd.setCursor(0,1);
     lcd.print(">");
@@ -137,7 +144,18 @@ void displayLineControlParamsDown()
     lcd.setCursor(0, 0);
     lcd.print(opt_2 [DisGlobalPos]);
     lcd.setCursor(1, 1);
-    lcd.print(opt_2 [DisGlobalPos++]);
+     if(DisGlobalPos == 2)
+    {
+      nextStrid = 0;
+      
+    }
+    else
+    {
+      nextStrid = DisGlobalPos + 1;
+    }
+    lcd.print(opt_2 [nextStrid]);
+    DisGlobalPos++;
+    delay(5000);
    }
    else
    {
@@ -148,7 +166,18 @@ void displayLineControlParamsDown()
     lcd.setCursor(0, 0);
     lcd.print(opt_3 [DisGlobalPos]);
     lcd.setCursor(1, 1);
-    lcd.print(opt_3 [DisGlobalPos++]);
+     if(DisGlobalPos == 2)
+    {
+      nextStrid = 0;
+      
+    }
+    else
+    {
+      nextStrid = DisGlobalPos + 1;
+    }
+    lcd.print(opt_3 [nextStrid]);
+    DisGlobalPos++;
+    delay(5000);
    }
   }
 }  
@@ -213,3 +242,17 @@ void displayLineControlParamsUp()
    }
   }  
 }
+void ActivateSol()
+{
+  currMillis=millis();
+
+  while(currMillis - startMillis = 20)
+  {
+    digitalWrite(eleMag,HIGH);
+  }
+  else()
+  {
+    digitalWrite(eleMag,LOW);
+  }
+  startMillis=currMillis;
+} 
