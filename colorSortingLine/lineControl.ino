@@ -27,9 +27,11 @@ void lineControlLoop()
 //  };
 //
 //  throwUnrecognizedObj();
+  
+  moveLine();
   displayLineControlParamsDown();//function for moving the menu down
   displayLineControlParamsUp();//function for moving the menu up
-}
+};
 
 //void emergencyStop() //TODO
 //{
@@ -67,12 +69,15 @@ bool isObjectToThrowIsPresent()
   }
   return false;
 }
-void moveLine(int speedPercents)
+void moveLine()
 {
+  int speedPercents; 
+ if(stopTheLine == false)
+ { 
   int dc = map(speedPercents, 0, 100, 0, 255);
   analogWrite(DSmPin, dc);
-
-}
+ };
+};
 void saveLineControlparams(line_control_params_t* lcp)
 {
   EEPROM.writeInt(addr, lcp->countOfThrowedObjects);
@@ -100,11 +105,12 @@ void readLineControlparams(line_control_params_t* lcp)
 
 void displayLineControlParamsDown()
 {
+   int nextStrid =0;//за да не превърта менюто 
 
   //for ( DisGlobalPos <3; DisGlobalPos++;)
   while(DisGlobalPos <3)
   {
-   int nextStrid =0;//за да не превърта менюто 
+  
     lcd.clear();
     lcd.setCursor(0,1);
     lcd.print(">");
@@ -214,7 +220,7 @@ void displayLineControlParamsUp()
   {
     lcd.setCursor(1, 0);
     //lcd.print(line_control_menu [3]);
-    lcd.print(sample [2]);
+    lcd.print(sample [2]);//a test for swithching between manues
   }
    while(button_pressed==true)//for calling sub-arrays
   {

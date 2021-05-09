@@ -45,7 +45,6 @@ String line_control_menu [4] =
   "maxDutyCycle",
   "minDutyCycle",
 };
-
 String sample [3] =
 {
   "opt 1",
