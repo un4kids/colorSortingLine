@@ -21,7 +21,8 @@ bool wrongObject;
 bool slower;
 bool button_pressed = true;
 unsigned int addr;
-int DisGlobalPos=0;  //for the display funcrions
+int DisGlobalPos = 0;  //for the display funcrions
+int speedPercents = 0;//for regulating the speed of the line
 unsigned long startMillis;
 unsigned long currMillis;
 
@@ -32,11 +33,11 @@ struct line_control_params_t
   unsigned int maxDutyCycle;
   unsigned int minDutyCycle;
 };
- struct line_control_params_t  lineControlparams = {0, 200, 255, 10};
+ struct line_control_params_t  lineControlparams = {0, 75, 100, 30};
 // lineControlparams.countOfThrowedObjects = 0;
-// lineControlparams.defaultDutyCycle = 200;
-// lineControlparams.maxDutyCycle = 255;
-// lineControlparams.minDutyCycle = 10;
+// lineControlparams.defaultDutyCycle = 75;
+// lineControlparams.maxDutyCycle = 100;
+// lineControlparams.minDutyCycle = 30;
 
 String line_control_menu [4] =
 {

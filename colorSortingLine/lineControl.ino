@@ -9,7 +9,7 @@ void setupLinecontrol()
 { //  feedMechServo.attach(4);
   //pinMode(solPin,OUTPUT);
   pinMode(eleMag, OUTPUT);
- // pinMode(eleMag_2, OUTPUT);
+  // pinMode(eleMag_2, OUTPUT);
   pinMode(DSmPin, OUTPUT);
   lcd.begin(16, 2);
   //startMillis=millis();
@@ -21,13 +21,13 @@ void setupLinecontrol()
 };
 void lineControlLoop()
 {
-//  if (!stopTheLine)
-//  {
-//    moveLine(lineControlparams.defaultDutyCycle);
-//  };
-//
-//  throwUnrecognizedObj();
-  
+  //  if (!stopTheLine)
+  //  {
+  //    moveLine(lineControlparams.defaultDutyCycle);
+  //  };
+  //
+  //  throwUnrecognizedObj();
+
   moveLine();
   displayLineControlParamsDown();//function for moving the menu down
   displayLineControlParamsUp();//function for moving the menu up
@@ -46,14 +46,14 @@ void throwUnrecognizedObj()
   {
     if (isObjectToThrowIsPresent())
     {
-      startMillis=millis();
-      ActivateSol();
-      
-      
-     
-      
-      
-      
+      startMillis = millis();
+      //ActivateSol();
+
+
+
+
+
+
 
       lineControlparams.countOfThrowedObjects++;
       objectIsUnrecognized = false;
@@ -71,12 +71,12 @@ bool isObjectToThrowIsPresent()
 }
 void moveLine()
 {
-  int speedPercents; 
- if(stopTheLine == false)
- { 
-  int dc = map(speedPercents, 0, 100, 0, 255);
-  analogWrite(DSmPin, dc);
- };
+  
+  if (!stopTheLine)
+  {
+    int dc = map(speedPercents, 0, 100, 0, 255);
+    analogWrite(DSmPin, dc);
+  };
 };
 void saveLineControlparams(line_control_params_t* lcp)
 {
@@ -105,24 +105,24 @@ void readLineControlparams(line_control_params_t* lcp)
 
 void displayLineControlParamsDown()
 {
-   int nextStrid =0;//за да не превърта менюто 
+  int nextStrid = 0; //за да не превърта менюто
 
   //for ( DisGlobalPos <3; DisGlobalPos++;)
-  while(DisGlobalPos <3)
+  while (DisGlobalPos < 3)
   {
-  
+
     lcd.clear();
-    lcd.setCursor(0,1);
+    lcd.setCursor(0, 1);
     lcd.print(">");
     lcd.setCursor(0, 0);
     //lcd.print(line_control_menu [DisGlobalPos]);
     lcd.print(sample [DisGlobalPos]);
     lcd.setCursor(1, 1);
     //lcd.print(line_control_menu [DisGlobalPos + 1]);
-    if(DisGlobalPos == 2)
+    if (DisGlobalPos == 2)
     {
       nextStrid = 0;
-      
+
     }
     else
     {
@@ -131,134 +131,134 @@ void displayLineControlParamsDown()
     lcd.print(sample [nextStrid]);
     DisGlobalPos++;
     delay(5000);
-    
+
   }
-  if(DisGlobalPos=2)
+  if (DisGlobalPos = 2)
   {
     lcd.setCursor(1, 1);
     //lcd.print(line_control_menu [0]);
-     lcd.print(sample [0]);
+    lcd.print(sample [0]);
   }
-  while(button_pressed==true)//for calling sub-arrays
+  while (button_pressed == true) //for calling sub-arrays
   {
-   if(DisGlobalPos= 1)
-   {
-    DisGlobalPos=0;
-    lcd.clear();
-    lcd.setCursor(0,1);
-    lcd.print(">");
-    lcd.setCursor(0, 0);
-    lcd.print(opt_2 [DisGlobalPos]);
-    lcd.setCursor(1, 1);
-     if(DisGlobalPos == 2)
+    if (DisGlobalPos = 1)
     {
-      nextStrid = 0;
-      
+      DisGlobalPos = 0;
+      lcd.clear();
+      lcd.setCursor(0, 1);
+      lcd.print(">");
+      lcd.setCursor(0, 0);
+      lcd.print(opt_2 [DisGlobalPos]);
+      lcd.setCursor(1, 1);
+      if (DisGlobalPos == 2)
+      {
+        nextStrid = 0;
+
+      }
+      else
+      {
+        nextStrid = DisGlobalPos + 1;
+      }
+      lcd.print(opt_2 [nextStrid]);
+      DisGlobalPos++;
+      delay(5000);
     }
     else
     {
-      nextStrid = DisGlobalPos + 1;
+      DisGlobalPos = 0;
+      lcd.clear();
+      lcd.setCursor(0, 1);
+      lcd.print(">");
+      lcd.setCursor(0, 0);
+      lcd.print(opt_3 [DisGlobalPos]);
+      lcd.setCursor(1, 1);
+      if (DisGlobalPos == 2)
+      {
+        nextStrid = 0;
+
+      }
+      else
+      {
+        nextStrid = DisGlobalPos + 1;
+      }
+      lcd.print(opt_3 [nextStrid]);
+      DisGlobalPos++;
+      delay(5000);
     }
-    lcd.print(opt_2 [nextStrid]);
-    DisGlobalPos++;
-    delay(5000);
-   }
-   else
-   {
-    DisGlobalPos=0;
-    lcd.clear();
-    lcd.setCursor(0,1);
-    lcd.print(">");
-    lcd.setCursor(0, 0);
-    lcd.print(opt_3 [DisGlobalPos]);
-    lcd.setCursor(1, 1);
-     if(DisGlobalPos == 2)
-    {
-      nextStrid = 0;
-      
-    }
-    else
-    {
-      nextStrid = DisGlobalPos + 1;
-    }
-    lcd.print(opt_3 [nextStrid]);
-    DisGlobalPos++;
-    delay(5000);
-   }
   }
-}  
+}
 void displayLineControlParamsUp()
 {
 
   //for ( DisGlobalPos>0; DisGlobalPos--;)
-  while(DisGlobalPos>0)
+  while (DisGlobalPos > 0)
   {
-   int nextStr = 0; 
+    int nextStr = 0;
     lcd.clear();
-    lcd.setCursor(0,0);
+    lcd.setCursor(0, 0);
     lcd.print(">");
     lcd.setCursor(0, 1);
     //lcd.print(line_control_menu [DisGlobalPos]);
     lcd.print(sample [DisGlobalPos]);
     lcd.setCursor(1, 0);
     //lcd.print(line_control_menu [DisGlobalPos - 1]);
-    if(DisGlobalPos == 0)
+    if (DisGlobalPos == 0)
     {
       nextStr = 2;
-      
+
     }
     else
     {
       nextStr = DisGlobalPos - 1;
     }
-     lcd.print(sample [nextStr]);
+    lcd.print(sample [nextStr]);
     DisGlobalPos--;
     delay(5000);
-    
+
   }
-  if(DisGlobalPos=0)
+  if (DisGlobalPos = 0)
   {
     lcd.setCursor(1, 0);
     //lcd.print(line_control_menu [3]);
     lcd.print(sample [2]);//a test for swithching between manues
   }
-   while(button_pressed==true)//for calling sub-arrays
+  while (button_pressed == true) //for calling sub-arrays
   {
-   if(DisGlobalPos= 0)
-   {
-    DisGlobalPos=0;
-    lcd.clear();
-    lcd.setCursor(0,1);
-    lcd.print(">");
-    lcd.setCursor(0, 0);
-    lcd.print(opt_1 [DisGlobalPos]);
-    lcd.setCursor(1, 1);
-    lcd.print(opt_1 [DisGlobalPos++]);
-   }
-   else
-   {
-    DisGlobalPos=0;
-    lcd.clear();
-    lcd.setCursor(0,1);
-    lcd.print(">");
-    lcd.setCursor(0, 0);
-    lcd.print(opt_2 [DisGlobalPos]);
-    lcd.setCursor(1, 1);
-    lcd.print(opt_2 [DisGlobalPos++]);
-   }
-  }  
+    if (DisGlobalPos = 0)
+    {
+      DisGlobalPos = 0;
+      lcd.clear();
+      lcd.setCursor(0, 1);
+      lcd.print(">");
+      lcd.setCursor(0, 0);
+      lcd.print(opt_1 [DisGlobalPos]);
+      lcd.setCursor(1, 1);
+      lcd.print(opt_1 [DisGlobalPos++]);
+    }
+    else
+    {
+      DisGlobalPos = 0;
+      lcd.clear();
+      lcd.setCursor(0, 1);
+      lcd.print(">");
+      lcd.setCursor(0, 0);
+      lcd.print(opt_2 [DisGlobalPos]);
+      lcd.setCursor(1, 1);
+      lcd.print(opt_2 [DisGlobalPos++]);
+    }
+  }
 }
-void ActivateSol()
-{
-  currMillis=millis();
+//void ActivateSol()
+//{
+//currMillis=millis();
 
-  while(currMillis - startMillis = 20)
-  {
-    digitalWrite(eleMag,HIGH);
-  }
-  else()
-  {
-    digitalWrite(eleMag,LOW);
-  }
-  startMillis=currMillis;
-} 
+//while(currMillis - startMillis = 20)
+//{
+//digitalWrite(eleMag,HIGH);
+//}
+//else()
+//{
+//digitalWrite(eleMag,LOW);
+//}
+//startMillis=currMillis;
+//}
