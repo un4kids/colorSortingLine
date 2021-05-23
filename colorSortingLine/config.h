@@ -22,7 +22,7 @@ bool slower;
 bool button_pressed = true;
 unsigned int addr;
 int DisGlobalPos = 0;  //for the display funcrions
-int speedPercents = 0;//for regulating the speed of the line
+int speedPercents = 75;//for regulating the speed of the line
 unsigned long startMillis;
 unsigned long currMillis;
 
