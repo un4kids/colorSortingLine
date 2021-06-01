@@ -9,14 +9,15 @@ rgb_lcd lcd;
 
 #include <Servo.h>
 
-int phoRes = 6;//pin for the photoresistor
-int DSmPin = 5;//pin for the DC motor
-int eleMag = 3;//pin for the electromagnet
+//int phoRes = ;//pin for the photoresistor
+int DSmPin = 4;//pin for the DC motor
+int eleMag = 6;//pin for the electromagnet
  
 
 void setup()
 {
   lcd.begin(16,2);
+  Serial.begin(9600);
 }
 
 
