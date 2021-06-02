@@ -29,8 +29,8 @@ void lineControlLoop()
   //  throwUnrecognizedObj();
 
   //moveLine();
-  displayLineControlParamsDown();//function for moving the menu down
-  //displayLineControlParamsUp();//function for moving the menu up
+  //displayLineControlParamsDown();//function for moving the menu down
+  displayLineControlParamsUp();//function for moving the menu up
 };
 
 //void emergencyStop() //TODO
@@ -125,18 +125,24 @@ void displayLineControlParamsDown()
     DisGlobalPos++;
 
 
-    if (DisGlobalPos == 3)
+    if (DisGlobalPos == 2)
     {
-      
-      Serial.println(sample [3]);
+      Serial.println(">");
+      Serial.println(sample [2]);
       Serial.println(sample [0]);
       DisGlobalPos = 0;
 
+
     }
-   
-//    lcd.print(sample [nextStrid]);
-//    Serial.println(sample [nextStrid]);
-//    DisGlobalPos++;
+    //for (button_pressed == true, button_PRESSed == true, DisGlobalPos == 0,) Още е в процес на до мисляне
+    {
+      // Чудя се дали тук, просто да сложа кода за въртене на менюто, но със името на съответното съб-меню.
+      // Има ли някакъв начин да сменя array в кода без да го копирам.
+    }
+
+    //    lcd.print(sample [nextStrid]);
+    //    Serial.println(sample [nextStrid]);
+    //    DisGlobalPos++;
     delay(5000);
 
   }
@@ -214,17 +220,19 @@ void displayLineControlParamsUp()
     lcd.setCursor(0, 1);
     //lcd.print(line_control_menu [DisGlobalPos]);
     lcd.print(sample [DisGlobalPos]);
-    Serial.println(sample [DisGlobalPos - 1]);
+    Serial.println(sample [DisGlobalPos]);
     lcd.setCursor(1, 0);
     //lcd.print(line_control_menu [DisGlobalPos - 1]);
+    Serial.println(sample [DisGlobalPos - 1]);
     DisGlobalPos--;
     if (DisGlobalPos == 0)
     {
-
+      Serial.println(">");
       Serial.println(sample[0]);
-      Serial.println(sample[3]);
-      DisGlobalPos = 3;
+      Serial.println(sample[2]);
+      DisGlobalPos = 2;
     }
+    delay(3000);
   }
 }
 //    else// Това е пробен код(МОЖЕ и да потрябва)
