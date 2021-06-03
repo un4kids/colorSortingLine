@@ -105,7 +105,7 @@ void readLineControlparams(line_control_params_t* lcp)
 
 void displayLineControlParamsDown()
 {
-  int nextStrid = 0; //за да не превърта менюто
+
 
   //for ( DisGlobalPos <3; DisGlobalPos++;)
   while (DisGlobalPos < 3)
@@ -123,29 +123,35 @@ void displayLineControlParamsDown()
     //lcd.print(line_control_menu [DisGlobalPos + 1]);
     Serial.println(sample [DisGlobalPos + 1]);
     DisGlobalPos++;
+  }
 
 
-    if (DisGlobalPos == 2)
-    {
-      Serial.println(">");
-      Serial.println(sample [2]);
-      Serial.println(sample [0]);
-      DisGlobalPos = 0;
+  if (DisGlobalPos == 2)
+  {
+    Serial.println(">");
+    Serial.println(sample [2]);
+    Serial.println(sample [0]);
+    EndOfLine = true;
 
-
-    }
-    //for (button_pressed == true, button_PRESSed == true, DisGlobalPos == 0,) Още е в процес на до мисляне
-    {
-      // Чудя се дали тук, просто да сложа кода за въртене на менюто, но със името на съответното съб-меню.
-      // Има ли някакъв начин да сменя array в кода без да го копирам.
-    }
-
-    //    lcd.print(sample [nextStrid]);
-    //    Serial.println(sample [nextStrid]);
-    //    DisGlobalPos++;
-    delay(5000);
 
   }
+  while (EndOfLine == true)
+  {
+    if (NextDown == true)
+    {
+      DisGlobalPos = 0;
+      EndOfLine = false;
+    }
+  }
+  while (button_PRESSed == true)
+  {
+    OPT_1();
+  }
+
+
+  delay(5000);
+
+
   //  if (DisGlobalPos = 2)
   //  {
   //    lcd.setCursor(1, 1);
@@ -209,10 +215,10 @@ void displayLineControlParamsDown()
 void displayLineControlParamsUp()
 {
 
-  //for ( DisGlobalPos>0; DisGlobalPos--;)
+
   while (DisGlobalPos > 0)
   {
-    int nextStr = 0;
+
     lcd.clear();
     lcd.setCursor(0, 0);
     lcd.print(">");
@@ -230,7 +236,15 @@ void displayLineControlParamsUp()
       Serial.println(">");
       Serial.println(sample[0]);
       Serial.println(sample[2]);
-      DisGlobalPos = 2;
+      EndOfLine = true;
+    }
+    while (EndOfLine == true)
+    {
+      if (NextUp == true)
+      {
+        DisGlobalPos = 3;
+        EndOfLine = false;
+      }
     }
     delay(3000);
   }
@@ -289,3 +303,92 @@ void displayLineControlParamsUp()
 //}
 //startMillis=currMillis;
 //}
+void ShowOpt_1Down()
+{
+
+
+
+  lcd.clear();
+  lcd.setCursor(0, 1);
+  lcd.print(">");
+  Serial.println(">");
+  lcd.setCursor(0, 0);
+  //lcd.print(line_control_menu [DisGlobalPos]);
+  lcd.print(opt_1 [DisGlobalPos]);
+  Serial.println(sample [DisGlobalPos]);
+  lcd.setCursor(1, 1);
+  //lcd.print(line_control_menu [DisGlobalPos + 1]);
+  Serial.println(opt_1 [DisGlobalPos + 1]);
+
+
+
+  if (NextDown == true)
+  {
+    DisGlobalPos + 1;
+  }
+
+  if (DisGlobalPos == 2)
+  {
+    Serial.println(">");
+    Serial.println(opt_1 [2]);
+    Serial.println(opt_1 [0]);
+    EndOfLine = true;
+
+
+  }
+  while (EndOfLine == true)
+  {
+    if (NextDown == true)
+    {
+      DisGlobalPos = 0;
+      EndOfLine == false;
+    }
+  }
+  if(NextUp= true)
+  {
+    ShowOpt_1Up();
+  }
+}
+void ShowOpt_1Up()
+{
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print(">");
+  Serial.println(">");
+  lcd.setCursor(0, 1);
+  //lcd.print(line_control_menu [DisGlobalPos]);
+  lcd.print(opt_1 [DisGlobalPos]);
+  Serial.println(sample [DisGlobalPos]);
+  lcd.setCursor(1, 0);
+  //lcd.print(line_control_menu [DisGlobalPos - 1]);
+  Serial.println(opt_1 [DisGlobalPos - 1]);
+  
+   if (NextUp == true)
+  {
+    DisGlobalPos - 1;
+  }
+  if (DisGlobalPos == 0)
+  {
+    Serial.println(">");
+    Serial.println(opt_1[0]);
+    Serial.println(opt_1[2]);
+    EndOfLine = true;
+  }
+  while (EndOfLine == true)
+  {
+    if (NextUp == true)
+    {
+      DisGlobalPos = 3;
+      EndOfLine = false;
+    }
+  }
+  if(NextDown= true)
+  {
+    ShowOpt_1Down();
+  }
+}
+void OPT_1()
+{
+ ShowOpt_1Down();
+ ShowOpt_1Up();  
+}

@@ -21,11 +21,15 @@ bool wrongObject;
 bool slower;
 bool button_pressed = true;
 bool button_PRESSed = true;
+bool NextDown = false;//за местене на менюто надолу
+bool NextUp = false;//за местене на менюто нагоре
+bool EndOfLine = false;// за когато DisGlobalPos стигне крайната,за loop-а , стойност
 unsigned int addr;
 int DisGlobalPos = 2;  //for the display funcrions
 int speedPercents = 75;//for regulating the speed of the line
 unsigned long startMillis;
 unsigned long currMillis;
+
 
 
 struct line_control_params_t
