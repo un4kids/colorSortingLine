@@ -1,7 +1,7 @@
 #include <Wire.h>
 #include "rgb_lcd.h"
 
-//rgb_lcd lcd;
+rgb_lcd ;
 
 
 
@@ -80,13 +80,13 @@ void moveLine()
 };
 void saveLineControlparams(line_control_params_t* lcp)
 {
-  EEPROM.writeInt(addr, lcp->countOfThrowedObjects);
+  EEPROM.write(addr, lcp->countOfThrowedObjects);
   addr += sizeof(int);
-  EEPROM.writeInt(addr, lcp->defaultDutyCycle);
+  EEPROM.write(addr, lcp->defaultDutyCycle);
   addr += sizeof(int);
-  EEPROM.writeInt(addr, lcp->maxDutyCycle);
+  EEPROM.write(addr, lcp->maxDutyCycle);
   addr += sizeof(int);
-  EEPROM.writeInt(addr, lcp->minDutyCycle);
+  EEPROM.write(addr, lcp->minDutyCycle);
   addr += sizeof(int);
   addr = 0;
 };
@@ -145,11 +145,24 @@ void displayLineControlParamsDown()
   }
   while (button_PRESSed == true)
   {
-    OPT_1();
+    if (DisGlobalPos = 0)
+    {
+      OPT_1();
+    }
+    if (DisGlobalPos = 1)
+    {
+      OPT_2();
+    }
+    if (DisGlobalPos = 2)
+    {
+      OPT_3();
+    }
+
+
   }
 
 
-  delay(5000);
+
 
 
   //  if (DisGlobalPos = 2)
@@ -231,24 +244,40 @@ void displayLineControlParamsUp()
     //lcd.print(line_control_menu [DisGlobalPos - 1]);
     Serial.println(sample [DisGlobalPos - 1]);
     DisGlobalPos--;
-    if (DisGlobalPos == 0)
+  }
+  if (DisGlobalPos == 0)
+  {
+    Serial.println(">");
+    Serial.println(sample[0]);
+    Serial.println(sample[2]);
+    EndOfLine = true;
+  }
+  while (EndOfLine == true)
+  {
+    if (NextUp == true)
     {
-      Serial.println(">");
-      Serial.println(sample[0]);
-      Serial.println(sample[2]);
-      EndOfLine = true;
+      DisGlobalPos = 3;
+      EndOfLine = false;
     }
-    while (EndOfLine == true)
+  }
+  while (button_PRESSed == true)
+  {
+    if (DisGlobalPos = 0)
     {
-      if (NextUp == true)
-      {
-        DisGlobalPos = 3;
-        EndOfLine = false;
-      }
+      OPT_1();
     }
-    delay(3000);
+    if (DisGlobalPos = 1)
+    {
+      OPT_2();
+    }
+    if (DisGlobalPos = 2)
+    {
+      OPT_3();
+    }
+
   }
 }
+
 //    else// Това е пробен код(МОЖЕ и да потрябва)
 //    {
 //      nextStr = DisGlobalPos - 1;
@@ -315,7 +344,7 @@ void ShowOpt_1Down()
   lcd.setCursor(0, 0);
   //lcd.print(line_control_menu [DisGlobalPos]);
   lcd.print(opt_1 [DisGlobalPos]);
-  Serial.println(sample [DisGlobalPos]);
+  Serial.print(opt_1 [DisGlobalPos + 1]);
   lcd.setCursor(1, 1);
   //lcd.print(line_control_menu [DisGlobalPos + 1]);
   Serial.println(opt_1 [DisGlobalPos + 1]);
@@ -344,10 +373,9 @@ void ShowOpt_1Down()
       EndOfLine == false;
     }
   }
-  if(NextUp= true)
-  {
-    ShowOpt_1Up();
-  }
+
+
+
 }
 void ShowOpt_1Up()
 {
@@ -358,12 +386,12 @@ void ShowOpt_1Up()
   lcd.setCursor(0, 1);
   //lcd.print(line_control_menu [DisGlobalPos]);
   lcd.print(opt_1 [DisGlobalPos]);
-  Serial.println(sample [DisGlobalPos]);
+  Serial.println(opt_1 [DisGlobalPos]);
   lcd.setCursor(1, 0);
   //lcd.print(line_control_menu [DisGlobalPos - 1]);
   Serial.println(opt_1 [DisGlobalPos - 1]);
-  
-   if (NextUp == true)
+
+  if (NextUp == true)
   {
     DisGlobalPos - 1;
   }
@@ -382,13 +410,192 @@ void ShowOpt_1Up()
       EndOfLine = false;
     }
   }
-  if(NextDown= true)
+  if (NextDown = true)
   {
     ShowOpt_1Down();
   }
 }
 void OPT_1()
 {
- ShowOpt_1Down();
- ShowOpt_1Up();  
+  ShowOpt_1Down();
+  ShowOpt_1Up();
+}
+void ShowOpt_2Down()
+{
+
+
+
+  lcd.clear();
+  lcd.setCursor(0, 1);
+  lcd.print(">");
+  Serial.println(">");
+  lcd.setCursor(0, 0);
+  //lcd.print(line_control_menu [DisGlobalPos]);
+  lcd.print(opt_2 [DisGlobalPos]);
+  Serial.print(opt_2 [DisGlobalPos + 1]);
+  lcd.setCursor(1, 1);
+  //lcd.print(line_control_menu [DisGlobalPos + 1]);
+  Serial.println(opt_2 [DisGlobalPos + 1]);
+
+
+
+  if (NextDown == true)
+  {
+    DisGlobalPos + 1;
+  }
+
+  if (DisGlobalPos == 2)
+  {
+    Serial.println(">");
+    Serial.println(opt_2 [2]);
+    Serial.println(opt_2 [0]);
+    EndOfLine = true;
+
+
+  }
+  while (EndOfLine == true)
+  {
+    if (NextDown == true)
+    {
+      DisGlobalPos = 0;
+      EndOfLine == false;
+    }
+  }
+  if (NextUp = true)
+  {
+    ShowOpt_2Up();
+  }
+}
+void ShowOpt_2Up()
+{
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print(">");
+  Serial.println(">");
+  lcd.setCursor(0, 1);
+  //lcd.print(line_control_menu [DisGlobalPos]);
+  lcd.print(opt_2 [DisGlobalPos]);
+  Serial.println(opt_2 [DisGlobalPos]);
+  lcd.setCursor(1, 0);
+  //lcd.print(line_control_menu [DisGlobalPos - 1]);
+  lcd.print(opt_2 [DisGlobalPos - 1]);
+  Serial.println(opt_2 [DisGlobalPos - 1]);
+
+  if (NextUp == true)
+  {
+    DisGlobalPos - 1;
+  }
+  if (DisGlobalPos == 0)
+  {
+    Serial.println(">");
+    Serial.println(opt_2[0]);
+    Serial.println(opt_2[2]);
+    EndOfLine = true;
+  }
+  while (EndOfLine == true)
+  {
+    if (NextUp == true)
+    {
+      DisGlobalPos = 3;
+      EndOfLine = false;
+    }
+  }
+  if (NextDown = true)
+  {
+    ShowOpt_1Down();
+  }
+}
+void OPT_2()
+{
+  ShowOpt_2Down();
+  ShowOpt_2Up();
+}
+void ShowOpt_3Down()
+{
+
+
+
+  lcd.clear();
+  lcd.setCursor(0, 1);
+  lcd.print(">");
+  Serial.println(">");
+  lcd.setCursor(0, 0);
+  //lcd.print(line_control_menu [DisGlobalPos]);
+  lcd.print(opt_3 [DisGlobalPos]);
+  Serial.print(opt_3 [DisGlobalPos + 1]);
+  lcd.setCursor(1, 1);
+  //lcd.print(line_control_menu [DisGlobalPos + 1]);
+  Serial.println(opt_3 [DisGlobalPos + 1]);
+
+
+
+  if (NextDown == true)
+  {
+    DisGlobalPos + 1;
+  }
+
+  if (DisGlobalPos == 2)
+  {
+    Serial.println(">");
+    Serial.println(opt_3 [2]);
+    Serial.println(opt_3 [0]);
+    EndOfLine = true;
+
+
+  }
+  while (EndOfLine == true)
+  {
+    if (NextDown == true)
+    {
+      DisGlobalPos = 0;
+      EndOfLine == false;
+    }
+  }
+  if (NextUp = true)
+  {
+    ShowOpt_3Up();
+  }
+}
+void ShowOpt_3Up()
+{
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print(">");
+  Serial.println(">");
+  lcd.setCursor(0, 1);
+  //lcd.print(line_control_menu [DisGlobalPos]);
+  lcd.print(opt_3 [DisGlobalPos]);
+  Serial.println(opt_3 [DisGlobalPos]);
+  lcd.setCursor(1, 0);
+  //lcd.print(line_control_menu [DisGlobalPos - 1]);
+  Serial.println(opt_3 [DisGlobalPos - 1]);
+
+  if (NextUp == true)
+  {
+    DisGlobalPos - 1;
+  }
+  if (DisGlobalPos == 0)
+  {
+    Serial.println(">");
+    Serial.println(opt_3[0]);
+    Serial.println(opt_3[2]);
+    EndOfLine = true;
+  }
+  while (EndOfLine == true)
+  {
+    if (NextUp == true)
+    {
+      DisGlobalPos = 3;
+      EndOfLine = false;
+    }
+  }
+  if (NextDown = true)
+  {
+    ShowOpt_3Down();
+  }
+}
+void OPT_3()
+{
+  ShowOpt_3Down();
+  ShowOpt_3Up();
 }

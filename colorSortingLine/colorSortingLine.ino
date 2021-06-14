@@ -1,3 +1,5 @@
+#include <EEPROM.h>
+
 #include <EEPROMex.h>
 #include <EEPROMVar.h>
 #include <Arduino.h>

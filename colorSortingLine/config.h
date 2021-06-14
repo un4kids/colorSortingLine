@@ -19,8 +19,7 @@ bool objectIsUnrecognized = false;
 bool stopTheLine = false;
 bool wrongObject;
 bool slower;
-bool button_pressed = true;
-bool button_PRESSed = true;
+bool button_PRESSed = true;//за избиране на менюто
 bool NextDown = false;//за местене на менюто надолу
 bool NextUp = false;//за местене на менюто нагоре
 bool EndOfLine = false;// за когато DisGlobalPos стигне крайната,за loop-а , стойност
