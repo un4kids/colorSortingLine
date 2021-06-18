@@ -1,10 +1,6 @@
-bool isObjectToSortIsPresent(){
-  if (digitalRead(sensPin) == HIGH){
-    return true;
-  }
-  return false;
-  
-}
+
+#define sensPin 12
+int ObjectColor;
 
 void sortCurrentObject(){
   switch (ObjectColor){
@@ -27,9 +23,36 @@ void sortCurrentObject(){
   }
 }
 
-void armControlLoop(){
-  if (isObjectToSortIsPresent()){
-   sortCurrentObject(); 
-   //sort
+
+
+
+bool availableObject = false;
+
+void isObjectToSortIsPresent() {
+  if (digitalRead(sensPin) == HIGH) {
+    availableObject = true;
+  }
+}
+
+void sortCurrentObject() {
+  switch (ObjectColor) {
+    case 1:
+      availableObject = false;
+      break;
+    case 2:
+      availableObject = false;
+      break;
+    case 3:
+      availableObject = false;
+      break;
+    case 0:
+      availableObject = false;
+      break;
+  }
+}
+
+void armControlLoop() {
+  if (availableObject) {
+    sortCurrentObject();
   }
 }
