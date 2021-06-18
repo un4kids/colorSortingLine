@@ -8,7 +8,7 @@ int ObjectColor;
 
 void setup()
 {
-  
+  colorRecognitionbegin();
 }
 
 
