@@ -41,3 +41,9 @@ bool wrongObject;
 bool slower;
 
 //feedMech config
+
+typedef struct 
+{
+  unsigned long timer;
+  
+}feed_mech_params;
