@@ -36,9 +36,11 @@ bool throwUnrecognizedObject = false;
 
 //line control config
 
-bool emergencyStop;
-bool wrongObject;
+bool objectIsUnrecognized = false;
+bool stopTheLine = false;
+bool wrongObject; 
 bool slower;
+int lineSpeed = 10;
 
 //feedMech config
 
