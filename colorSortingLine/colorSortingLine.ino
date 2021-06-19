@@ -14,7 +14,7 @@ int eleMag_2 = 2;//pin for the electromagnet
 void setup()
 {
 
-  colorRecognitionSetup();
+  //colorRecognitionSetup();
 }
 
 
@@ -23,8 +23,8 @@ void loop()
 {
   feedMechLoop();
   lineControlLoop();
-  colorRecognitionLoop();
+//  colorRecognitionLoop();
   armControlLoop();
-  mesureColor();
+//  mesureColor();
   
 }

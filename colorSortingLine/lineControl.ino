@@ -2,12 +2,12 @@
 
 void lineControlLoop()
 {
-  if (!stopTheLine)
+  if (!emergencyStopLine || !pauseLine)
   {
-    moveLine(lineSpeed);
+    moveLine();
   }
 
-  throwUnrecognizedObj()
+  throwUnrecognizedObj();
 }
 
 //void emergencyStop() //TODO
@@ -42,9 +42,14 @@ bool isObjectToThrowIsPresent()
   }
   return false;
 }
-void moveLine(int speedPercents)
+void moveLine()
 {
-  int dc = map(speedPercents, 0, 100, 0, 255);
-  analogWrite(DSmPin, dc);
+  analogWrite(DSmPin, lineControlParams.speedInPercents);
 
+}
+
+void setLineSpeed(int newSpeed)
+{
+  lineControlParams.speedInPercents = newSpeed;
+  lineControlParams.defaultDutyCycle = map(newSpeed, 0, 100, 0, 255);
 }

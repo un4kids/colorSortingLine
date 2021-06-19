@@ -2,6 +2,8 @@
 bool objectsAvailible;
 
 
+
+
 //output congfigs
 
 //robot arm control config
@@ -34,10 +36,27 @@ bool throwUnrecognizedObject = false;
 
 #define photoResistor 2
 
+
 //line control config
 
+
+typedef struct{
+  int coutnOfThrowedObjects;
+  int defaultDutyCycle;
+  int maxDutyCycle;
+  int minDutyCycle;
+  int speedInPercents;
+  
+}line_control_params_t;
+
+line_control_params_t lineControlParams = {0, 0, 0, 0};
+
+bool emergencyStopLine = false;
+bool pauseLine = false;
+
+
+
 bool objectIsUnrecognized = false;
-bool stopTheLine = false;
 bool wrongObject; 
 bool slower;
 int lineSpeed = 10;
