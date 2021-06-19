@@ -62,9 +62,24 @@ bool slower;
 int lineSpeed = 10;
 
 //feedMech config
+#define feedMechServoPin A0
+#define feedMechPhoPin 8
+typedef struct
+{
+  int countOfFeededObjects;
+  unsigned long mainMaxTimer;
+  unsigned long mainMinTimer;
+  unsigned long mainTimer;
+
+} feed_mech_params_t;
+
+feed_mech_params_t servo_modes = {0, 0, 0, 0};
+unsigned long feedMechTimer_container = 0;
+unsigned long* feedMechTimer_ptr;
 
 typedef struct 
 {
   unsigned long timer;
   
 }feed_mech_params;
+
