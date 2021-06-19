@@ -6,7 +6,14 @@ bool objectsAvailible;
 
 //output congfigs
 
-//robot arm control config
+////robot arm control config
+
+const uint8_t objectColor1 = 49;
+const uint8_t objectColor2 = 50;
+const uint8_t objectColor3 = 51;
+const uint8_t Home = 52;
+
+
 
 //color recognition config
 typedef struct
@@ -58,6 +65,12 @@ bool pauseLine = false;
 
 bool objectIsUnrecognized = false;
 bool wrongObject; 
+
+
+//line control config
+
+//bool emergencyStop;
+bool wrongObject;
 bool slower;
 int lineSpeed = 10;
 
