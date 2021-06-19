@@ -156,3 +156,7 @@ typedef struct
   
 }feed_mech_params;
 
+//remoteCtl
+ 
+  //const byte address[6] = "00001";
+  int a = 0;
