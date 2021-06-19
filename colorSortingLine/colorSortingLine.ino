@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 
-#include <Arduino.h>
-#include "VarSpeedServo.h"
-=======
 #include <SoftwareSerial.h>
 #include <VarSpeedServo.h> 
 #include <EEPROMex.h>
@@ -10,7 +6,6 @@
 #include "A4988.h"
 #include "MultiDriver.h"
 #include "SyncDriver.h"
->>>>>>> robotArm
 #include "config.h"
 #include "Robot_Arm_pinout.h"
 //ArmControl
@@ -45,11 +40,8 @@ SyncDriver ctl(xMotor, yMotor, zMotor);
 
 void setup()
 {
-<<<<<<< HEAD
   Serial.begin(115200);
-=======
   setupArm();
->>>>>>> robotArm
 }
 
 

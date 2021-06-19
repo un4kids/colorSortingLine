@@ -44,6 +44,7 @@ bool throwUnrecognizedObject = false;
 #define photoResistor 2
 
 
+
 //line control config
 
 
@@ -70,9 +71,68 @@ bool wrongObject;
 //line control config
 
 //bool emergencyStop;
+
 bool wrongObject;
 bool slower;
-int lineSpeed = 10;
+bool button_PRESSed = true;//за избиране на менюто
+bool NextDown = false;//за местене на менюто надолу
+bool NextUp = false;//за местене на менюто нагоре
+bool EndOfLine = false;// за когато DisGlobalPos стигне крайната,за loop-а , стойност
+unsigned int addr;
+int DisGlobalPos = 2;  //for the display funcrions
+int speedPercents = 75;//for regulating the speed of the line
+unsigned long startMillis;
+unsigned long currMillis;
+
+
+
+struct line_control_params_t
+{ unsigned int countOfThrowedObjects;
+  unsigned int defaultDutyCycle;
+  unsigned int maxDutyCycle;
+  unsigned int minDutyCycle;
+};
+ struct line_control_params_t  lineControlparams = {0, 75, 100, 30};
+// lineControlparams.countOfThrowedObjects = 0;
+// lineControlparams.defaultDutyCycle = 75;
+// lineControlparams.maxDutyCycle = 100;
+// lineControlparams.minDutyCycle = 30;
+
+String line_control_menu [4] =
+{
+  "Count of throwed objects",
+  "Default DutyCycle",
+  "maxDutyCycle",
+  "minDutyCycle",
+};
+String sample [3] =
+{
+  "opt 1",
+  "opt 2",
+  "opt 3",
+};
+ 
+String opt_1 [3] =
+{
+  "nice",
+  "option",
+  "one",
+};
+  
+String opt_2 [3] =
+{
+  "well",
+  "done",
+  "option 2",
+};
+
+String opt_3 [3] =
+{
+  "good",
+  "job",
+  "option 3",
+};     
+ 
 
 //feedMech config
 #define feedMechServoPin A0

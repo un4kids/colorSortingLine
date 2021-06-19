@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 #define sensPin 12
 int ObjectColor;
@@ -120,3 +121,5 @@ void setupArm() {
   // set the data rate for the SoftwareSerial port
   mySerial.begin(38400);
 }
+=======
+>>>>>>> lineControl
