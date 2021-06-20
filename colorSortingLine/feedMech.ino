@@ -1,39 +1,82 @@
 
-void feedMechBegin()
+void setupMech()
 {
-  VarSpeedServo feedMech_servo;
-  feedMech_servo.attach(feedMechServoPin);
-  
+  feedMechServo.attach(FEED_MECH_SERVO_PIN);
+    feedMechServo.write(60, feedMechFeedSpeed, true);
+delay(1000);
+  feedMechServo.write(feedMechFeedAngle, feedMechFeedSpeed, true);
+
+
+  feedMechServoConfig.maxTimer = 2000;
+  feedMechServoConfig.minTimer = 400;
+  feedMechServoConfig.mainTimer = 1000;
+
+  currentTimer = feedMechServoConfig.mainTimer;
 }
 
 void feedMechLoop()
 {
-  if (objectsArePresent())
+  if (!objectTankerEmpty && !emergencyStopLine)
   {
-    if (digitalRead(6) == LOW)
-    {//boost
-      feedMechTimer_ptr = &servo_modes.mainMaxTimer;
-  
-    } else if (digitalRead(7) == LOW)
-    {//rand from main to max
-      feedMechTimer_ptr = random(&servo_modes.mainMinTimer, &servo_modes.mainMaxTimer - 1) ;
-    }else {
-      //default
-      feedMechTimer_ptr = &servo_modes.mainTimer;
-    }
-    if (millis() - feedMechTimer_container >= *feedMechTimer_ptr)
+    Serial.print("-------------------> FEED");
+    Serial.print(currentTimer);
+    //Serial.print(slower);
+    Serial.println();
+
+    if (millis() - feedMechElapsedTime >= currentTimer)
     {
-      feedMechTimer_container = millis();
+      feedMechElapsedTime = millis();
+      if (!feedMechServo.isMoving())
+      {
+        if (!retract)
+        {
+          retract = !retract;
+          feedMechServo.write(feedMechRetractAngle, feedMechRetractSpeed, false);
+        }
+        else
+        {
+          retract = !retract;
+          feedMechServo.write(feedMechFeedAngle, feedMechFeedSpeed, false);
+        }
+      }
     }
+  }
+  else
+  {
+    feedMechServo.write(feedMechFeedAngle, feedMechFeedSpeed, false);
+
+  }
+  handleSpeed();
+}
+
+void handleSpeed()
+{
+  if (faster)
+  {
+    currentTimer = feedMechServoConfig.minTimer;
+  }
+  else if (slower)
+  {
+    currentTimer = feedMechServoConfig.maxTimer;
+  }
+  else
+  {
+    currentTimer = feedMechServoConfig.mainTimer;
   }
 }
 
 
-bool objectsArePresent()
+void checkObjectTankerSens()
 {
-  if (digitalRead(feedMechPhoPin) == 0)
+  if (digitalRead(OBJECT_TANKER_SENS_PIN) == LOW && !objectTankerEmpty)
   {
-    return true;
+    Serial.println("-------------------> EMPTY");
+    objectTankerEmpty = true;
   }
-  return false;
+  if (digitalRead(OBJECT_TANKER_SENS_PIN) == HIGH && objectTankerEmpty)
+  {
+    Serial.println("-------------------> PRESENT");
+
+    objectTankerEmpty = false;
+  }
 }
