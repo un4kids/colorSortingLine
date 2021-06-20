@@ -48,7 +48,7 @@ void loop()
   lineControlLoop();
   colorRecognitionLoop();
   //arm control
-  currentColor = 51;
+  currentColor = 52;
   readCmd();
   isObjectToSortIsPresent();
 }

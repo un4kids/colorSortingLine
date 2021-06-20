@@ -11,45 +11,51 @@ void sortCurrentObject() {
   switch (uint8_t(currentColor)) {
     case objectColor1:
       Serial.print("Sorting object color 1");
-      ctl.rotate(0, 10, -15);
+      ctl.rotate(0, 6, -10);
       delay(250);
       myservo.write(0, 50, true);
       delay(250);
-      ctl.rotate(0, -10, 15);
-      ctl.rotate(15, 0, 0);
+      ctl.rotate(0, -6, 10);
+      //ctl.rotate(15, 0, 0);
       delay(200);
       //drop
       myservo.write(130, 50, true);
       delay(200);
-      ctl.rotate(-15, 0, 0);
+      //ctl.rotate(-5, 0, 0);
       break;
     case objectColor2:
       Serial.println("Sorting object color 2");
-      ctl.rotate(0, 10, -15);
+      ctl.rotate(0, 6, -10);
       delay(250);
       myservo.write(0, 50, true);
       delay(250);
-      ctl.rotate(0, -10, 15);
-      ctl.rotate(-19, 0, 0);
+      ctl.rotate(0, -6, 10);
+      ctl.rotate(8, 0, 0);
       delay(200);
       //drop
       myservo.write(130, 50, true);
       delay(200);
-      ctl.rotate(19, 0, 0);
+      ctl.rotate(-8, 0, 0);
       break;
     case objectColor3:
       Serial.println("Sorting object color 3");
-      ctl.rotate(0, 10, -15);
+      ctl.rotate(0, 6, -10);
       delay(250);
-      myservo.write(0, 50, true);
+      myservo.write(5, 100, true);
       delay(250);
-      ctl.rotate(0, -10, 15);
-      ctl.rotate(24, 0, 0);
+      ctl.rotate(0, -6, 10);
+      ctl.rotate(-8, 0, 0);
       delay(200);
       //drop
       myservo.write(130, 50, true);
       delay(200);
-      ctl.rotate(-24, 0, 0);
+      ctl.rotate(8, 0, 0);
+      break;
+     case Home:
+      Serial.println("Sorting object color 3");
+      ctl.rotate(0, -12, 12);
+      delay(250);
+      myservo.write(5, 100, true);
       break;
   }
   xMotor.disable();
