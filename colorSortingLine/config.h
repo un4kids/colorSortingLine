@@ -199,10 +199,10 @@ bool emergencyStopLine = false;
 bool pauseLine = false;
 
 bool objectIsUnrecognized = false;
-unsigned long throwObjectTimer =  400;
+unsigned long throwObjectTimer =  500;
 
 unsigned long solenoidOldTimer = 0;
-unsigned long solenoidTimer = 40;
+unsigned long solenoidTimer = 60;
 bool solenoidTimerStarted = false;
 
 bool objectThrowed = true;

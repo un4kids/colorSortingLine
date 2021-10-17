@@ -120,12 +120,12 @@ void loop()
 
 
 
-//    if (millis() - mainTimer >= 2000)
-//    {
-//      mainTimer = millis();
-//      objectIsUnrecognized = true;
-//      //objectThrowed = false;
-//    }
+    if (millis() - mainTimer >= 2000)
+    {
+      mainTimer = millis();
+      objectIsUnrecognized = true;
+      //objectThrowed = false;
+    }
 
   checkTunelSensA();
   checkTunelSensB();
