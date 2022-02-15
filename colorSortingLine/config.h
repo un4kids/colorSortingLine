@@ -6,6 +6,7 @@
 bool tunelSesnTrigeredA = false;
 bool tunelSensTrigeredB = false;
 
+
 unsigned long tunelPresenceTimestampA = 0;
 unsigned long tunelPresenceTimestampB = 0;
 
@@ -33,7 +34,9 @@ int encoderOldPosition = 0;
 static uint8_t menuPointerPos = 0;
 static uint8_t currentCursorPos = 0;
 static uint8_t oldMenuPointerPos = 0;
+
 bool renderView = true;
+bool renderObjCounter = false;
 bool onSubMenuItem = false;
 
 int sharedParam = 0;
@@ -61,28 +64,14 @@ String menu [menuNumItems] =
 #define SET_COLOR_1 4
 #define SET_COLOR_2 5
 #define SET_COLOR_3 6
-//#define lineSpeedMenuNumItems 3
-//String lineSpeedMenu [menuNumItems] =
-//{
-//  "default speed",
-//  "max speed",
-//  "min speed",
-//};
-//#define colorMenuNumItems 3
-//String colorMenu [menuNumItems] =
-//{
-//  "color #1",
-//  "color #2",
-//  "color #3",
-//};
 
 
 //ROBOT ARM CONTROL
 
-const uint8_t objectColor1 = 49;
-const uint8_t objectColor2 = 50;
-const uint8_t objectColor3 = 51;
-const uint8_t Home = 52;
+//const uint8_t objectColor1 = 49;
+//const uint8_t objectColor2 = 50;
+//const uint8_t objectColor3 = 51;
+//const uint8_t Home = 52;
 
 // LED used for the welding effect
 #define NUM_LEDS 1
@@ -113,73 +102,72 @@ const uint8_t Home = 52;
 #define MOTOR_DECEL 100
 
 //movement modes for non blocking
-#define MOVE_1 1
-#define MOVE_2 2 
-#define MOVE_3 3 
-#define MOVE_4 4 
-#define MOVE_5 5
-#define HOME 7
+bool armIsHomed = true;
+bool moveDone = false;
+uint8_t currentArmState = 0;
+
+#define ARM_IS_BUSY 1
+#define ARM_IS_DONE 2
+#define ARM_IS_HOMED 3
+
 
 
 
 
 //COLOR RECOGNITION COLOR
 //
-//typedef struct
-//{
-//  uint8_t R;
-//  uint8_t G;
-//  uint8_t B;
-//} object_color_t;
-//
-//object_color_t ethalonObject_1;
-//
-//object_color_t ethalonObject_2;
-//
-//object_color_t ethalonObject_3;
-//
-//object_color_t currentObject;
+
+#define COLOR_A 1
+#define COLOR_B 2
+#define COLOR_C 3
+
+uint8_t currentColorId = 0;
+uint8_t recognizedColorsStack[64];
 
 
 // Color Table for matching
-typedef struct
-{
-  String    colorName;  // color name 8+nul
-  colorData rgb;    // RGB value
-} color_table_t;
+//typedef struct
+//{
+//  String    colorName;  // color name 8+nul
+//  colorData rgb;    // RGB value
+//} color_table_t;
+//
+//
+//color_table_t colorTable[] =
+//{
+//  {"WHITE", {255, 255, 255} },
+//  {"BLACK", {0, 0, 0} },
+//  {"YELLOW", {53, 30, 7} },
+//  {"ORANGE", {46, 8, 3} },
+//  {"RED", {23, 1, 2} },
+//  {"GREEN", {17, 26, 7} },
+//  {"BLUE", {2, 11, 25} },
+//  {"BROWN", {8, 0, 0} },
+//
+//};
+//
+//colorData cueerentCollorData;
+//
+//#define NAN_COLOR 0
+//#define RED 1
+//#define GREEEN 2
+//#define BLUE 3
+//
+//int currentColorId;
+//bool throwUnrecognizedObject = false;
+//
+//
+//
+//#define photoResistor 2
 
-
-color_table_t colorTable[] =
-{
-  {"WHITE", {255, 255, 255} },
-  {"BLACK", {0, 0, 0} },
-  {"YELLOW", {53, 30, 7} },
-  {"ORANGE", {46, 8, 3} },
-  {"RED", {23, 1, 2} },
-  {"GREEN", {17, 26, 7} },
-  {"BLUE", {2, 11, 25} },
-  {"BROWN", {8, 0, 0} },
-
-};
-
-colorData cueerentCollorData;
-
-#define NAN_COLOR 0
-#define RED 1
-#define GREEEN 2
-#define BLUE 3
-
-int currentColorId;
-bool throwUnrecognizedObject = false;
-
-
-
-#define photoResistor 2
 
 
 
 //LINE CONTROL CONFIG
 
+#define LINE_MOTOR_PIN 4//DSmPin
+#define SOLENOID_PIN 6
+#define END_SENS_PIN 23
 
 typedef struct {
   int countOfThrowedObjects;
@@ -190,12 +178,8 @@ typedef struct {
 
 line_control_params_t lineControlParams = {0, 0, 0, 0};
 
-#define LINE_MOTOR_PIN 4//DSmPin
-#define SOLENOID_PIN 6
-
-// struct line_control_params_t  lineControlparams = {0, 75, 100, 30};
-
 bool emergencyStopLine = false;
+bool emergencyStateChanged = false;
 bool pauseLine = false;
 
 bool objectIsUnrecognized = false;
@@ -206,6 +190,8 @@ unsigned long solenoidTimer = 60;
 bool solenoidTimerStarted = false;
 
 bool objectThrowed = true;
+
+bool endSensTriggered = false;
 
 
 //line control config
@@ -223,18 +209,40 @@ typedef struct
 
 } feed_mech_params_t;
 
-feed_mech_params_t feedMechServoConfig = {0, 0, 0, 0};
+feed_mech_params_t feedMech = {0, 0, 0, 0};
 
-unsigned long currentTimer = 0;
+unsigned long feedMechCurrentTimer = 0;
 
 unsigned long feedMechElapsedTime = 0;
 bool retract = false;
 
-uint8_t feedMechRetractAngle = 50;
-uint8_t feedMechFeedAngle = 180;
+uint8_t feedMechRetractAngle = 180; //50
+uint8_t feedMechFeedAngle = 50; // 180
 uint8_t feedMechFeedSpeed = 200;
 uint8_t feedMechRetractSpeed = 200;
 
 bool objectTankerEmpty = false;
 
 //REMOTE CTL
+
+//ARM CONNECTION
+
+#define CONTAINER_A_CMD 1
+#define CONTAINER_B_CMD 2
+#define CONTAINER_C_CMD 3
+#define GO_TO_HOME_CMD 4
+
+
+//HELPER TYPES
+#define QUEUE_MAX_SIZE 4
+
+// A structure to represent a queue
+struct ui8_queue_t  {
+  int front;
+  int rear;
+  int qSize;
+//  unsigned capacity;
+  //    unt8_t* arr;
+  uint8_t arr[QUEUE_MAX_SIZE];
+};
+ui8_queue_t colorsQueue;

@@ -3,8 +3,8 @@ void setupLinecontrol()
 {
   lineControlParams.countOfThrowedObjects = 0;
   lineControlParams.maxSpeed = 100;
-  lineControlParams.minSpeed = 30;
-  setLineSpeed(60);
+  lineControlParams.minSpeed = 40;
+  setLineSpeed(80);
 };
 void lineControlLoop()
 {
@@ -19,7 +19,10 @@ void lineControlLoop()
   if (objectIsUnrecognized) {
     throwUnrecognizedObj();
   }
-  emergencyStopButton.read() == HIGH ? emergencyStopLine = true : emergencyStopLine = false;
+//  emergencyStopButton.read() == HIGH ?/ emergencyStopLine = true : emergencyStopLine = false;
+
+
+  checkFinalSesn();
 }
 
 void moveLine()
@@ -44,14 +47,7 @@ void setLineSpeed(uint8_t newSpeed)
   lineControlParams.defaultSpeed = newSpeed;
 }
 
-//bool moveSlower()
-//{
-//  if (ctlPanelButtonB.read() == LOW)//add triger from remote control
-//  {
-//    slower = true;
-//  }
-//  slower = false;
-//}
+
 
 void throwUnrecognizedObj()
 {
@@ -103,6 +99,24 @@ void checkTunelSensB()
   {
     Serial.println("HIGH ---------> B");
     tunelSensTrigeredB = false;
+  }
+}
+
+void checkFinalSesn()
+{
+  if (digitalRead(END_SENS_PIN) == HIGH && !endSensTriggered)
+  {
+    Serial.println("--------------------------------------> END");
+    delay(1000);
+    currentArmState = ARM_IS_DONE;
+    endSensTriggered = true;
+  }
+  if (digitalRead(END_SENS_PIN) == LOW && endSensTriggered)
+  {
+    Serial.println("--------------------------------------> NOT END");
+    delay(1000);
+
+    endSensTriggered = false;
   }
 }
 

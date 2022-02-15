@@ -30,7 +30,7 @@ void updateBttnsState()
   emergencyStopButton.update();
 
   updateSpeedCtl();
-  
+
   if (ctlPanelEncoderButton.tapped())
   {
     Serial.println("-----------------------> TAPED");
@@ -53,6 +53,19 @@ void updateBttnsState()
     {
       currentDisplayMode = MENU_DISPLAY_MODE;
     }
+    renderView = true;
+  }
+
+  //check the emergency stop button state
+  if (emergencyStopButton.read() == HIGH && !emergencyStopLine)
+  {
+    feedMech.countOfFeededObjects = 0;
+    emergencyStopLine = true;
+    renderView = true;
+  }
+  else if (emergencyStopButton.read() == LOW && emergencyStopLine)
+  {
+    emergencyStopLine = false;
     renderView = true;
   }
 }
@@ -139,9 +152,18 @@ void renderIdleMode()
       lcd.setCursor(0, 0);
       lcd.print("EMERGENCY STOP");
     } else {
-      lcd.clear();
+      if ( !renderObjCounter)
+      {
+        lcd.clear();
+        lcd.setCursor(0, 0);
+        lcd.print("IDLE");
+        lcd.setCursor(0, 1);
+        lcd.print("objects: ");
+      }
+      lcd.setCursor(9, 1);
+      lcd.print(feedMech.countOfFeededObjects);
+      renderObjCounter = false;
 
-      lcd.print("IDLE");
     }
 
     renderView = false;

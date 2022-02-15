@@ -2,28 +2,28 @@
 void setupMech()
 {
   feedMechServo.attach(FEED_MECH_SERVO_PIN);
-    feedMechServo.write(60, feedMechFeedSpeed, true);
-delay(1000);
+  feedMechServo.write(60, feedMechFeedSpeed, true);
+  delay(1000);
   feedMechServo.write(feedMechFeedAngle, feedMechFeedSpeed, true);
 
 
-  feedMechServoConfig.maxTimer = 2000;
-  feedMechServoConfig.minTimer = 400;
-  feedMechServoConfig.mainTimer = 1000;
+  feedMech.maxTimer = 4000;
+  feedMech.minTimer = 800;
+  feedMech.mainTimer = 2000;
 
-  currentTimer = feedMechServoConfig.mainTimer;
+  feedMechCurrentTimer = feedMech.mainTimer;
 }
 
 void feedMechLoop()
 {
   if (!objectTankerEmpty && !emergencyStopLine)
   {
-    Serial.print("-------------------> FEED");
-    Serial.print(currentTimer);
-    //Serial.print(slower);
-    Serial.println();
+    //    Serial.print("-------------------> FEED");
+    //    Serial.println(GO_TO_HOME_CMD);
+    //    //Serial.print(slower);
+    //    Serial.println();
 
-    if (millis() - feedMechElapsedTime >= currentTimer)
+    if (millis() - feedMechElapsedTime >= feedMechCurrentTimer)
     {
       feedMechElapsedTime = millis();
       if (!feedMechServo.isMoving())
@@ -32,6 +32,12 @@ void feedMechLoop()
         {
           retract = !retract;
           feedMechServo.write(feedMechRetractAngle, feedMechRetractSpeed, false);
+
+          //TODO for now we generate random coloe while pushing the object
+          feedMech.countOfFeededObjects ++;
+          renderView = true;
+          renderObjCounter = true;
+          pushColorInStack();
         }
         else
         {
@@ -53,15 +59,15 @@ void handleSpeed()
 {
   if (faster)
   {
-    currentTimer = feedMechServoConfig.minTimer;
+    feedMechCurrentTimer = feedMech.minTimer;
   }
   else if (slower)
   {
-    currentTimer = feedMechServoConfig.maxTimer;
+    feedMechCurrentTimer = feedMech.maxTimer;
   }
   else
   {
-    currentTimer = feedMechServoConfig.mainTimer;
+    feedMechCurrentTimer = feedMech.mainTimer;
   }
 }
 

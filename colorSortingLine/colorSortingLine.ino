@@ -1,7 +1,7 @@
 #include <Arduino.h>
 
 
-//color recognition 
+//color recognition
 #include <MD_TCS230.h>
 #include <FreqCount.h>
 
@@ -69,6 +69,9 @@ bool Setlineslower;
 int16_t Ledbrightnesslevel;
 char msgBuffer[5];
 
+//colors data definition
+
+
 
 //ctl panel variables
 ButtonEvents ctlPanelEncoderButton;
@@ -92,16 +95,50 @@ sensorData sdWhite = { 0, 0, 0 };
 void setup()
 {
   Serial.begin(115200);
+  Serial3.begin(9600);
+
   setupLinecontrol();
   setupCtlPanel();
   setupMech();
   //  setupArm();
   //   setupRemoteCtl();
+
+  //  setupArmMasterConn();
+
+  //random color generator for tests
+  randomSeed(analogRead(0));
+
+  initQueue(&colorsQueue);
+
 }
 
 unsigned long mainTimer = 0;
 void loop()
 {
+//  Serial3.write(uint8_t());
+  Serial3.print(1);
+
+  while(Serial3.available() == 0)
+  {
+    uint8_t asd= Serial3.read();
+    Serial.println(asd);
+  }
+  delay(2000);
+
+  //  for (int i=1; i<=10;i++)
+  //  {
+  //    enqueue(&colorsQueue, uint8_t(i));
+  //  }
+  //
+  //   for (int i=0; i<10;i++)
+  //  {
+  //    Serial.println(dequeue(&colorsQueue));
+  //  }
+  //
+  //  Serial.println();
+  //  delay(2000000);
+
+
   lineControlLoop();
   ctlPanelLoop();
   feedMechLoop();
@@ -120,16 +157,19 @@ void loop()
 
 
 
-    if (millis() - mainTimer >= 2000)
-    {
-      mainTimer = millis();
-      objectIsUnrecognized = true;
-      //objectThrowed = false;
-    }
+  if (millis() - mainTimer >= 2000)
+  {
+    mainTimer = millis();
+    objectIsUnrecognized = true;
+    //objectThrowed = false;
+  }
 
   checkTunelSensA();
   checkTunelSensB();
   checkObjectTankerSens();
-  //checkFinalSesn();
-  //delay(600);
+  checkFinalSesn();
+  //  delay(600);/
+
+  armConnectionLoop();
+
 }

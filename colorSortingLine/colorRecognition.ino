@@ -114,6 +114,27 @@
 //    return pulseIn(sensorOut, LOW);
 //  }
 //}
+
+
+
+void generateRandColorId()
+{
+}
+
+void pushColorInStack()
+{
+  //for now we will push random color to the color stack
+  currentColorId = uint8_t(random(1, 4));
+  Serial.print("Pushing color to QUEUE ");
+  //  Serial.println(currentColorId);
+  enqueue(&colorsQueue, currentColorId);
+    for (int i = 0; i < 4; i++)
+    {
+      Serial.print("  ");
+      Serial.print(colorsQueue.arr[i]);
+      Serial.println();
+    }
+}
 //void writeObject_color(object_color_t* obj)
 //{
 //  EEPROM.writeInt(addr, obj->R );

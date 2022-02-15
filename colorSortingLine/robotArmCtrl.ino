@@ -1,7 +1,7 @@
 // <<<<<<< HEAD
 // <<<<<<< HEAD
 // <<<<<<< HEAD
-
+/*
 #define sensPin 12
 int ObjectColor;
 // =======
@@ -43,9 +43,9 @@ int ObjectColor;
 
 // =======
 // >>>>>>> robotArm
-void isObjectToSortIsPresent() 
+void isObjectToSortIsPresent()
 {
-  if (digitalRead(sensPin) == HIGH) 
+  if (digitalRead(sensPin) == HIGH)
   {
     availableObject = true;
     sortCurrentObject();
@@ -56,7 +56,7 @@ void isObjectToSortIsPresent()
 void sortCurrentObject()
 {
   xMotor.enable();
-  switch (uint8_t(currentColor)) 
+  switch (uint8_t(currentColor))
   {
     case objectColor1:
       Serial.print("Sorting object color 1");
@@ -104,7 +104,7 @@ void sortCurrentObject()
   xMotor.disable();
   currentColor = 0;
 }
-void readCmd() 
+void readCmd()
 {
   if (mySerial.available())
   {
@@ -112,7 +112,7 @@ void readCmd()
   }
   Serial.println(uint8_t(currentColor));
 }
-void setupArm() 
+void setupArm()
 {
   myservo.attach(12);
 
@@ -167,3 +167,6 @@ void setupArm()
 //  }
 //}
 // >>>>>>> remoteCtl
+
+
+*/
